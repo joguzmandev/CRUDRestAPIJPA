@@ -3,6 +3,7 @@ package net.jguzmandev.service;
 import lombok.RequiredArgsConstructor;
 import net.jguzmandev.dto.PersonaDTO;
 import net.jguzmandev.dto.PersonaDetalleDTO;
+import net.jguzmandev.exception.PersonaNotFoundException;
 import net.jguzmandev.mapper.PersonaMapper;
 import net.jguzmandev.model.Persona;
 import net.jguzmandev.repository.IPersonaRepository;
@@ -50,9 +51,9 @@ public class PersonaService  implements IPersonaService{
     }
 
     @Override
-    public PersonaDetalleDTO buscarPersionaPorId(Long id) {
+    public PersonaDetalleDTO buscarPersionaPorId(Long id) throws PersonaNotFoundException {
         Persona persona = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+                .orElseThrow(() -> new PersonaNotFoundException("Persona no encontrada"));
         return personaMapper.toDetalleDTO(persona);
     }
 }

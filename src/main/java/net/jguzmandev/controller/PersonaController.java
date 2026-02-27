@@ -3,6 +3,7 @@ package net.jguzmandev.controller;
 import lombok.RequiredArgsConstructor;
 import net.jguzmandev.dto.PersonaDTO;
 import net.jguzmandev.dto.PersonaDetalleDTO;
+import net.jguzmandev.exception.PersonaNotFoundException;
 import net.jguzmandev.model.Persona;
 import net.jguzmandev.service.IPersonaService;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonaDetalleDTO> buscarPersionaPorId(@PathVariable Long id){
+    public ResponseEntity<PersonaDetalleDTO> buscarPersionaPorId(@PathVariable Long id)
+            throws PersonaNotFoundException {
         return ResponseEntity.ok(personaService.buscarPersionaPorId(id));
     }
 
