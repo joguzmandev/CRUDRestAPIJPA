@@ -1,7 +1,11 @@
 package net.jguzmandev.repository;
 
+import lombok.AllArgsConstructor;
 import net.jguzmandev.model.Address;
 import net.jguzmandev.model.Customer;
+import net.jguzmandev.model.Manager;
+import net.jguzmandev.model.Shop;
+import org.hibernate.engine.spi.Managed;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerRepositoryTest {
+
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -83,7 +88,8 @@ class CustomerRepositoryTest {
     @Test
     public void updateCustomerFirstNameById(){
         customerRepository.updateCustomerFirstNameById("Carolina VH",2L);
-
     }
+
+
 
 }
