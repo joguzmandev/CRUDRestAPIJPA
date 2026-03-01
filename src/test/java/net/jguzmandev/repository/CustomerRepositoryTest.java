@@ -9,6 +9,7 @@ import org.hibernate.engine.spi.Managed;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ShopRepository shopRepository;
 
     @Test
     public void saveCustomer(){
@@ -90,6 +94,25 @@ class CustomerRepositoryTest {
         customerRepository.updateCustomerFirstNameById("Carolina VH",2L);
     }
 
+    @Test
+    @Transactional
+    public void createManyToManyWithShop(){
+        Customer _c1 = customerRepository.findById(1L).get();
 
+        Shop _shop1 = shopRepository.findById(1002L).get();
+
+        Shop _shop2 = shopRepository.findById(952L).get();
+
+        _c1.addShop(_shop1);
+        _c1.addShop(_shop2);
+
+        customerRepository.save(_c1);
+
+        System.out.println("=== >> << ===");
+        System.out.println(_c1);
+        System.out.println(_c1.getShops());
+        System.out.println("=== >> << ===");
+
+    }
 
 }

@@ -19,10 +19,10 @@ public class Manager {
     private String firstName;
     private String lastName;
 
-//    @OneToOne(
-//            targetEntity = Shop.class,
-//            fetch = FetchType.LAZY,
-//            mappedBy = "manager"
-//    )
-//    private Shop shop;
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            mappedBy = "manager"
+    )
+    @ToString.Exclude
+    private Shop shop;
 }

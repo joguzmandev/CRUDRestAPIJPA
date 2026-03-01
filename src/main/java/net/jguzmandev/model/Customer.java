@@ -4,6 +4,8 @@ package net.jguzmandev.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
 @Entity
 @Table(
@@ -49,6 +51,28 @@ public class Customer {
             @AttributeOverride(name = "country", column = @Column(name="shipping_country",nullable = false)),
     })
     private Address shippingAddress;
+
+
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "customer_shop",
+            joinColumns = {
+                    @JoinColumn(name="customer_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name="shop_id")
+            }
+    )
+    @ToString.Exclude
+    private List<Shop> shops;
+
+    public void addShop(Shop shop){
+        this.shops.add(shop);
+        shop.getCustomers().add(this);
+    }
 
 
 

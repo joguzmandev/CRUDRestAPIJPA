@@ -3,6 +3,8 @@ package net.jguzmandev.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,14 +21,24 @@ public class Shop {
     private String floor;
 
     @OneToOne(
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.EAGER,
-            optional = false  // un Shop SIEMPRE tiene Manager
+            cascade = {CascadeType.PERSIST},
+            fetch = FetchType.LAZY,
+            optional = false
     )
     @JoinColumn(
             name = "manager_id",
             referencedColumnName = "managerId"
     )
-
+    @ToString.Exclude
     private Manager manager;
+
+    @OneToMany(
+            mappedBy = "shop",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST})
+    @ToString.Exclude
+    private List<Order> orders;
+
+    @ManyToMany(mappedBy = "shops", fetch = FetchType.LAZY)
+    private List<Customer> customers;
 }
